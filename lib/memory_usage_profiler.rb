@@ -1,4 +1,4 @@
-require 'memory_usage_profiler/version'
+require_relative 'memory_usage_profiler/version'
 
 require 'objspace'
 
