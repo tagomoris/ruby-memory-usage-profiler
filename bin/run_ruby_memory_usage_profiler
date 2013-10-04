@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'memory_usage_profiler'
+
+trap(:INT){ MemoryUsageProfiler.stop_thread }
+trap(:TERM){ MemoryUsageProfiler.stop_thread }
+trap(:HUP){ MemoryUsageProfiler.stop_thread }
+
+thread = case ARGV.size
+         when 2
+           MemoryUsageProfiler.start_thread(ARGV[0].to_i, ARGV[1])
+         when 1
+           MemoryUsageProfiler.start_thread(ARGV[0].to_i)
+         when 0
+           MemoryUsageProfiler.start_thread
+         end
+thread.join
