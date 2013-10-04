@@ -95,10 +95,3 @@ module MemoryUsageProfiler
     @@thread_running = false
   end
 end
-# if __FILE__ == $0
-#   MemoryUsageProfiler.periodical_profile
-#   1_000_000_000.times{
-#     ''
-#   }
-#   p :exit
-# end

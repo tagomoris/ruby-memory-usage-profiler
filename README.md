@@ -2,8 +2,7 @@
 
 Collect memory usage profiling informations from CRuby runtime and Linux pseudo filesystems.
 
-Originally written by @_ko1 on URL below.
- * http://www.atdot.net/sp/view/fd73um
+Originally written by @_ko1.
 
 ## Installation
 
