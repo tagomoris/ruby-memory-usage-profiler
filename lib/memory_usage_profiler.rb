@@ -54,8 +54,12 @@ module MemoryUsageProfiler
     end
   end
 
+  def self.banner_items
+    MEMORY_PROFILE_BANNER
+  end
+
   def self.banner
-    MEMORY_PROFILE_BANNER.join("\t")
+    banner_items.join("\t")
   end
 
   def self.kick(name, &callback)
@@ -63,7 +67,7 @@ module MemoryUsageProfiler
     MEMORY_PROFILE_PROCS.each{|pr|
       pr.call(result)
     }
-    callback.call(result.join("\t"))
+    callback.call(result)
   end
 
   def self.start_thread(duration=MEMORY_PROFILE_DURATION, file=MEMORY_PROFILE_OUTPUT_PATH)
@@ -84,7 +88,7 @@ module MemoryUsageProfiler
       Thread.current.abort_on_exception = true
       while @@thread_running
         kick(Time.now.iso8601) { |result|
-          file.puts result
+          file.puts result.join("\t")
           sleep duration
         }
       end

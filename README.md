@@ -36,9 +36,11 @@ For stdout, specify '-'
 
 Kick `MemoryUsageProfiler#kick` with block how to process results each time you want.
 
+    labels = MemoryUsageProfiler.banner
     each_time_you_want do
       MemoryUsageProfiler.kick('my_program_label') do |result|
-        send_to_anywhere_by_myself(result)
+        result_hash = Hash[ [labels, result].transpose ]
+        send_to_anywhere_by_myself(result_hash)
       end
     end
 
