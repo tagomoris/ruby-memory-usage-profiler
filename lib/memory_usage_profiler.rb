@@ -54,6 +54,15 @@ module MemoryUsageProfiler
     end
   end
 
+  h = {}
+  add ObjectSpace.count_objects(h).keys.map{|e| "count_of_#{e.to_s}"} do |result|
+    result.concat h.values
+  end
+
+  add ObjectSpace.count_objects_size(h).keys.map{|e| "size_of_#{e.to_s}"} do |result|
+    result.concat h.values
+  end
+
   def self.banner_items
     MEMORY_PROFILE_BANNER
   end
@@ -98,4 +107,9 @@ module MemoryUsageProfiler
   def self.stop_thread
     @@thread_running = false
   end
+end
+
+if $0 == __FILE__
+  MemoryUsageProfiler.start_thread(1, '-')
+  100_000_000.times{''}
 end
