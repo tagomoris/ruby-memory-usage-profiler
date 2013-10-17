@@ -56,11 +56,11 @@ module MemoryUsageProfiler
 
   h = {}
   add ObjectSpace.count_objects(h).keys.map{|e| "count_of_#{e.to_s}"} do |result|
-    result.concat h.values
+    result.concat ObjectSpace.count_objects(h).values
   end
 
   add ObjectSpace.count_objects_size(h).keys.map{|e| "size_of_#{e.to_s}"} do |result|
-    result.concat h.values
+    result.concat ObjectSpace.count_objects_size(h).values
   end
 
   def self.banner_items
