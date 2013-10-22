@@ -55,12 +55,23 @@ module MemoryUsageProfiler
   end
 
   h = {}
-  add ObjectSpace.count_objects(h).keys.map{|e| "count_of_#{e.to_s}"} do |result|
-    result.concat ObjectSpace.count_objects(h).values
+  T_TYPES = %i{
+    T_NONE T_OBJECT T_CLASS T_MODULE T_FLOAT T_STRING T_REGEXP T_ARRAY T_HASH T_STRUCT
+    T_BIGNUM T_FILE T_DATA T_MATCH T_COMPLEX T_RATIONAL T_NIL T_TRUE T_FALSE T_SYMBO
+    L T_FIXNUM T_UNDEF T_NODE T_ICLASS T_ZOMBIE
+  }
+  add T_TYPES.map{|e| "count_of_#{e.to_s}"} do |result|
+    ObjectSpace.count_objects(h)
+    T_TYPES.each{|t|
+      result << (h[t] || 0)
+    }
   end
 
-  add ObjectSpace.count_objects_size(h).keys.map{|e| "size_of_#{e.to_s}"} do |result|
-    result.concat ObjectSpace.count_objects_size(h).values
+  add T_TYPES.map{|e| "size_of_#{e.to_s}"} do |result|
+    ObjectSpace.count_objects_size(h)
+    T_TYPES.each{|t|
+      result << (h[t] || 0)
+    }
   end
 
   def self.banner_items
